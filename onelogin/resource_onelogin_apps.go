@@ -11,7 +11,6 @@ import (
 	"github.com/onelogin/terraform-provider-onelogin/ol_schema/app"
 	"github.com/onelogin/terraform-provider-onelogin/ol_schema/app/parameters"
 	"github.com/onelogin/terraform-provider-onelogin/ol_schema/app/provisioning"
-	"github.com/onelogin/terraform-provider-onelogin/ol_schema/app/rules"
 )
 
 // Apps returns a resource with the CRUD methods and Terraform Schema defined
@@ -38,7 +37,6 @@ func appCreate(d *schema.ResourceData, m interface{}) error {
 		"allow_assumed_signin": d.Get("allow_assumed_signin"),
 		"parameters":           d.Get("parameters"),
 		"provisioning":         d.Get("provisioning"),
-		"rules":                d.Get("rules"),
 	})
 	client := m.(*client.APIClient)
 	appResp, err := client.Services.AppsV2.Create(&basicApp)
@@ -88,7 +86,6 @@ func appRead(d *schema.ResourceData, m interface{}) error {
 	d.Set("updated_at", app.UpdatedAt.String())
 	d.Set("parameters", appparametersschema.Flatten(app.Parameters))
 	d.Set("provisioning", appprovisioningschema.Flatten(*app.Provisioning))
-	d.Set("rules", apprulesschema.Flatten(app.Rules))
 
 	return nil
 }
@@ -105,7 +102,6 @@ func appUpdate(d *schema.ResourceData, m interface{}) error {
 		"allow_assumed_signin": d.Get("allow_assumed_signin"),
 		"parameters":           d.Get("parameters"),
 		"provisioning":         d.Get("provisioning"),
-		"rules":                d.Get("rules"),
 	})
 
 	aid, _ := strconv.Atoi(d.Id())

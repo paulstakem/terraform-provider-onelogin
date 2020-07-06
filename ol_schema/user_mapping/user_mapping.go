@@ -85,20 +85,3 @@ func Inflate(s map[string]interface{}) usermappings.UserMapping {
 	}
 	return out
 }
-
-// Flatten takes a UserMappings array and converts it to an array of maps
-func Flatten(UserMappings []usermappings.UserMapping) []map[string]interface{} {
-	out := make([]map[string]interface{}, len(UserMappings))
-	for i, UserMapping := range UserMappings {
-		out[i] = map[string]interface{}{
-			"id":         UserMapping.ID,
-			"name":       UserMapping.Name,
-			"match":      UserMapping.Match,
-			"enabled":    UserMapping.Enabled,
-			"position":   UserMapping.Position,
-			"conditions": usermappingconditionsschema.Flatten(UserMapping.Conditions),
-			"actions":    usermappingactionsschema.Flatten(UserMapping.Actions),
-		}
-	}
-	return out
-}

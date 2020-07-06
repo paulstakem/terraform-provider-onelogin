@@ -3,18 +3,18 @@ package apprulesschema
 import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/onelogin/onelogin-go-sdk/pkg/oltypes"
-	"github.com/onelogin/onelogin-go-sdk/pkg/services/apps"
-	"github.com/onelogin/terraform-provider-onelogin/ol_schema/app/rules/actions"
-	"github.com/onelogin/terraform-provider-onelogin/ol_schema/app/rules/conditions"
+	"github.com/onelogin/onelogin-go-sdk/pkg/services/app_rules"
+	"github.com/onelogin/terraform-provider-onelogin/ol_schema/app_rules/actions"
+	"github.com/onelogin/terraform-provider-onelogin/ol_schema/app_rules/conditions"
 	"github.com/onelogin/terraform-provider-onelogin/utils"
 )
 
 // Schema returns a key/value map of the various fields that make up the Rules of a OneLogin App.
 func Schema() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": &schema.Schema{
+		"app_id": &schema.Schema{
 			Type:     schema.TypeInt,
-			Computed: true,
+			Required: true,
 		},
 		"name": &schema.Schema{
 			Type:     schema.TypeString,
@@ -31,7 +31,7 @@ func Schema() map[string]*schema.Schema {
 			Default:  false,
 		},
 		"position": &schema.Schema{
-			Type:     schema.TypeInt,
+			Type:     schema.TypeString,
 			Computed: true,
 		},
 		"conditions": &schema.Schema{
@@ -57,10 +57,10 @@ func validMatch(val interface{}, key string) (warns []string, errs []error) {
 
 // Inflate takes a key/value map of interfaces and uses the fields to construct
 // a AppProvisioning struct, a sub-field of a OneLogin App.
-func Inflate(s map[string]interface{}) apps.AppRule {
-	out := apps.AppRule{}
-	if id, notNil := s["id"].(int); id != 0 && notNil {
-		out.ID = oltypes.Int32(int32(id))
+func Inflate(s map[string]interface{}) apprules.AppRule {
+	out := apprules.AppRule{}
+	if appID, notNil := s["app_id"].(int); appID != 0 && notNil {
+		out.AppID = oltypes.Int32(int32(appID))
 	}
 	if name, notNil := s["name"].(string); notNil {
 		out.Name = oltypes.String(name)
@@ -86,23 +86,6 @@ func Inflate(s map[string]interface{}) apps.AppRule {
 			valMap := val.(map[string]interface{})
 			cond := appruleactionsschema.Inflate(valMap)
 			out.Actions = append(out.Actions, cond)
-		}
-	}
-	return out
-}
-
-// Flatten takes a AppRules array and converts it to an array of maps
-func Flatten(appRules []apps.AppRule) []map[string]interface{} {
-	out := make([]map[string]interface{}, len(appRules))
-	for i, appRule := range appRules {
-		out[i] = map[string]interface{}{
-			"id":         appRule.ID,
-			"name":       appRule.Name,
-			"match":      appRule.Match,
-			"enabled":    appRule.Enabled,
-			"position":   appRule.Position,
-			"conditions": appruleconditionsschema.Flatten(appRule.Conditions),
-			"actions":    appruleactionsschema.Flatten(appRule.Actions),
 		}
 	}
 	return out

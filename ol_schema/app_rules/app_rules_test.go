@@ -1,17 +1,18 @@
-package usermappingschema
+package apprulesschema
 
 import (
 	"fmt"
 	"testing"
 
 	"github.com/onelogin/onelogin-go-sdk/pkg/oltypes"
-	"github.com/onelogin/onelogin-go-sdk/pkg/services/user_mappings"
+	"github.com/onelogin/onelogin-go-sdk/pkg/services/app_rules"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestRulesSchema(t *testing.T) {
-	t.Run("creates and returns a map of a user mapping Schema", func(t *testing.T) {
+	t.Run("creates and returns a map of a Rules Schema", func(t *testing.T) {
 		provSchema := Schema()
+		assert.NotNil(t, provSchema["app_id"])
 		assert.NotNil(t, provSchema["name"])
 		assert.NotNil(t, provSchema["match"])
 		assert.NotNil(t, provSchema["position"])
@@ -23,11 +24,11 @@ func TestRulesSchema(t *testing.T) {
 func TestInflate(t *testing.T) {
 	tests := map[string]struct {
 		ResourceData   map[string]interface{}
-		ExpectedOutput usermappings.UserMapping
+		ExpectedOutput apprules.AppRule
 	}{
-		"creates and returns the address of an user mapping struct": {
+		"creates and returns the address of an AppParameters struct": {
 			ResourceData: map[string]interface{}{
-				"id":       123,
+				"app_id":   123,
 				"name":     "test",
 				"match":    "test",
 				"enabled":  true,
@@ -47,23 +48,24 @@ func TestInflate(t *testing.T) {
 					},
 				},
 			},
-			ExpectedOutput: usermappings.UserMapping{
-				ID:       oltypes.Int32(int32(123)),
+			ExpectedOutput: apprules.AppRule{
+				AppID:    oltypes.Int32(int32(123)),
 				Name:     oltypes.String("test"),
 				Match:    oltypes.String("test"),
 				Enabled:  oltypes.Bool(true),
 				Position: oltypes.Int32(int32(1)),
-				Conditions: []usermappings.UserMappingConditions{
-					usermappings.UserMappingConditions{
+				Conditions: []apprules.AppRuleConditions{
+					apprules.AppRuleConditions{
 						Source:   oltypes.String("test"),
 						Operator: oltypes.String("="),
 						Value:    oltypes.String("test"),
 					},
 				},
-				Actions: []usermappings.UserMappingActions{
-					usermappings.UserMappingActions{
-						Action: oltypes.String("test"),
-						Value:  []string{"test"},
+				Actions: []apprules.AppRuleActions{
+					apprules.AppRuleActions{
+						Action:     oltypes.String("test"),
+						Expression: oltypes.String(".*"),
+						Value:      []string{"test"},
 					},
 				},
 			},

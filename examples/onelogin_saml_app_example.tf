@@ -6,34 +6,38 @@ resource onelogin_saml_apps saml{
   configuration = {
     signature_algorithm = "SHA-1"
   }
-  rules {
-    enabled = true
-    match = "all"
-    name = "first rule"
-    conditions {
-      operator = ">"
-      source = "last_login"
-      value = "90"
-    }
-    actions {
-      action = "set_amazonusername"
-      expression = ".*"
-      value = ["member_of"]
-    }
+}
+
+resource onelogin_app_rules test_a{
+  enabled = true
+  match = "all"
+  name = "first rule"
+  app_id = onelogin_saml_apps.saml.id
+  conditions {
+    operator = ">"
+    source = "last_login"
+    value = "90"
   }
-  rules {
-    enabled = true
-    match = "all"
-    name = "second rule"
-    conditions {
-      operator = "ri"
-      source = "has_role"
-      value = "340475"
-    }
-    actions {
-      action = "set_amazonusername"
-      expression = ".*"
-      value = ["member_of"]
-    }
+  actions {
+    action = "set_amazonusername"
+    expression = ".*"
+    value = ["member_of"]
   }
+}
+resource onelogin_app_rules test_b{
+  enabled = true
+  match = "all"
+  name = "second rule"
+  app_id = onelogin_saml_apps.saml.id
+  conditions {
+    operator = "ri"
+    source = "has_role"
+    value = "340475"
+  }
+  actions {
+    action = "set_amazonusername"
+    expression = ".*"
+    value = ["member_of"]
+  }
+  depends_on = [onelogin_app_rules.test_a]
 }

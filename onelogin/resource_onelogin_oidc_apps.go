@@ -11,7 +11,6 @@ import (
 	"github.com/onelogin/terraform-provider-onelogin/ol_schema/app/configuration"
 	"github.com/onelogin/terraform-provider-onelogin/ol_schema/app/parameters"
 	"github.com/onelogin/terraform-provider-onelogin/ol_schema/app/provisioning"
-	"github.com/onelogin/terraform-provider-onelogin/ol_schema/app/rules"
 	"github.com/onelogin/terraform-provider-onelogin/ol_schema/app/sso"
 )
 
@@ -53,7 +52,6 @@ func oidcAppCreate(d *schema.ResourceData, m interface{}) error {
 		"parameters":           d.Get("parameters"),
 		"provisioning":         d.Get("provisioning"),
 		"configuration":        d.Get("configuration"),
-		"rules":                d.Get("rules"),
 	})
 	if err != nil {
 		log.Println("Unable to convert string in plan to required value type", err)
@@ -109,7 +107,6 @@ func oidcAppRead(d *schema.ResourceData, m interface{}) error {
 	d.Set("provisioning", appprovisioningschema.Flatten(*app.Provisioning))
 	d.Set("configuration", appconfigurationschema.FlattenOIDC(*app.Configuration))
 	d.Set("sso", appssoschema.FlattenOIDC(*app.Sso))
-	d.Set("rules", apprulesschema.Flatten(app.Rules))
 
 	return nil
 }
@@ -127,7 +124,6 @@ func oidcAppUpdate(d *schema.ResourceData, m interface{}) error {
 		"parameters":           d.Get("parameters"),
 		"provisioning":         d.Get("provisioning"),
 		"configuration":        d.Get("configuration"),
-		"rules":                d.Get("rules"),
 	})
 	if err != nil {
 		log.Println("Unable to convert string in plan to required value type", err)
