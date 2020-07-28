@@ -31,7 +31,7 @@ func Schema() map[string]*schema.Schema {
 			Default:  false,
 		},
 		"position": &schema.Schema{
-			Type:     schema.TypeString,
+			Type:     schema.TypeInt,
 			Computed: true,
 			Optional: true,
 		},
@@ -69,8 +69,8 @@ func Inflate(s map[string]interface{}) apprules.AppRule {
 	if match, notNil := s["match"].(string); notNil {
 		out.Match = oltypes.String(match)
 	}
-	if pos, notNil := s["position"].(string); notNil {
-		out.Position = oltypes.String(pos)
+	if pos, notNil := s["position"].(int); notNil {
+		out.Position = oltypes.Int32(int32(pos))
 	}
 	if pos, notNil := s["enabled"].(bool); notNil {
 		out.Enabled = oltypes.Bool(pos)

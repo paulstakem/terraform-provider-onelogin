@@ -12,5 +12,3 @@ require (
 	golang.org/x/image v0.0.0-20200618115811-c13761719519 // indirect
 	golang.org/x/sys v0.0.0-20200727154430-2d971f7391a4 // indirect
 )
-
-replace github.com/onelogin/onelogin-go-sdk => /Users/dominickcaponi/go/src/github.com/onelogin/onelogin-go-sdk

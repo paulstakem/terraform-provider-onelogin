@@ -18,14 +18,18 @@ func TestAccAppRule_crud(t *testing.T) {
 				Config: base,
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr("onelogin_app_rules.test_a", "name", "first rule"),
+					resource.TestCheckResourceAttr("onelogin_app_rules.test_a", "position", "1"),
 					resource.TestCheckResourceAttr("onelogin_app_rules.test_b", "name", "second rule"),
+					resource.TestCheckResourceAttr("onelogin_app_rules.test_b", "position", "2"),
 				),
 			},
 			{
 				Config: update,
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("onelogin_app_rules.test_a", "name", "second rule"),
-					resource.TestCheckResourceAttr("onelogin_app_rules.test_b", "name", "first rule"),
+					resource.TestCheckResourceAttr("onelogin_app_rules.test_a", "name", "updated first rule"),
+					resource.TestCheckResourceAttr("onelogin_app_rules.test_a", "position", "2"),
+					resource.TestCheckResourceAttr("onelogin_app_rules.test_b", "name", "updated second rule"),
+					resource.TestCheckResourceAttr("onelogin_app_rules.test_b", "position", "1"),
 				),
 			},
 		},

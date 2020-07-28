@@ -12,6 +12,7 @@ resource onelogin_app_rules test_a{
   enabled = true
   match = "all"
   name = "updated first rule"
+  position = 2
   app_id = onelogin_saml_apps.saml.id
   conditions {
     operator = ">"
@@ -29,6 +30,7 @@ resource onelogin_app_rules test_b{
   enabled = true
   match = "all"
   name = "updated second rule"
+  position = 1
   app_id = onelogin_saml_apps.saml.id
   conditions {
     operator = "ri"
