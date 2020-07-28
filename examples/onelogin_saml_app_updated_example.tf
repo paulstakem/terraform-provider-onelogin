@@ -24,6 +24,7 @@ resource onelogin_app_rules test_a{
     value = ["member_of"]
   }
 }
+
 resource onelogin_app_rules test_b{
   enabled = true
   match = "all"

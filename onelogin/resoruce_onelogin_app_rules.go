@@ -49,9 +49,9 @@ func appRuleCreate(d *schema.ResourceData, m interface{}) error {
 
 func appRuleRead(d *schema.ResourceData, m interface{}) error {
 	client := m.(*client.APIClient)
-	aid, _ := strconv.Atoi(d.Id())
+	rid, _ := strconv.Atoi(d.Id())
 	appID := d.Get("app_id").(int)
-	appRule, err := client.Services.AppRulesV2.GetOne(int32(appID), int32(aid))
+	appRule, err := client.Services.AppRulesV2.GetOne(int32(appID), int32(rid))
 	if err != nil {
 		log.Printf("[ERROR] There was a problem reading the app rule!")
 		log.Println(err)
@@ -64,7 +64,7 @@ func appRuleRead(d *schema.ResourceData, m interface{}) error {
 	log.Printf("[READ] Reading app rule with %d", *(appRule.ID))
 
 	d.Set("name", appRule.Name)
-	d.Set("app_id", appRule.AppID)
+	d.Set("app_id", appID)
 	d.Set("match", appRule.Match)
 	d.Set("enabled", appRule.Enabled)
 	d.Set("position", appRule.Position)
@@ -84,9 +84,9 @@ func appRuleUpdate(d *schema.ResourceData, m interface{}) error {
 		"conditions": d.Get("conditions"),
 		"actions":    d.Get("actions"),
 	})
-
+	rid, _ := strconv.Atoi(d.Id())
 	client := m.(*client.APIClient)
-	resp, err := client.Services.AppRulesV2.Update(&appRule)
+	resp, err := client.Services.AppRulesV2.Update(int32(rid), &appRule)
 	if err != nil {
 		log.Println("[ERROR] There was a problem updating the app rule!", err)
 		return err
