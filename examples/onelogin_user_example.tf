@@ -1,4 +1,4 @@
-resource onelogin_users basic_test {
+resource "onelogin_users" "basic_test" {
   username = "testy.mctesterson"
-  email = "testy.mctesterson@onelogin.com"
+  email    = "testy.mctesterson@onelogin.com"
 }
