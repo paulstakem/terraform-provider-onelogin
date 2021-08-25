@@ -41,6 +41,9 @@ sideload: build
 testacc:
 	TF_ACC=1 go test ./... -v -timeout 120m
 
+vet:
+	go vet ./...
+
 ti:
 	terraform init
 
