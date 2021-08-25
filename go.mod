@@ -14,7 +14,7 @@ require (
 	github.com/hashicorp/terraform-exec v0.14.0 // indirect
 	github.com/hashicorp/terraform-plugin-sdk v1.17.2
 	github.com/mattn/go-isatty v0.0.13 // indirect
-	github.com/onelogin/onelogin-go-sdk v1.1.13
+	github.com/onelogin/onelogin-go-sdk v1.1.17
 	github.com/stretchr/testify v1.7.0
 	golang.org/x/mod v0.4.2 // indirect
 	golang.org/x/sys v0.0.0-20210823070655-63515b42dcdf // indirect
