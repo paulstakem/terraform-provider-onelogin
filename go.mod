@@ -17,7 +17,7 @@ require (
 	github.com/onelogin/onelogin-go-sdk v1.1.13
 	github.com/stretchr/testify v1.7.0
 	golang.org/x/mod v0.4.2 // indirect
-	golang.org/x/sys v0.0.0-20210608053332-aa57babbf139 // indirect
+	golang.org/x/sys v0.0.0-20210823070655-63515b42dcdf // indirect
 	golang.org/x/term v0.0.0-20201210144234-2321bbc49cbf // indirect
 	golang.org/x/text v0.3.6 // indirect
 	google.golang.org/api v0.44.0-impersonate-preview // indirect
